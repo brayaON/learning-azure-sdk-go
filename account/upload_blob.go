@@ -16,22 +16,17 @@ func UploadBlobs() {
     ctx := context.Background()
 
     accountName := os.Getenv("AZURE_SA_NAME")
-    accountKey := os.Getenv("AZURE_SA_KEY")
-    accountURL := fmt.Sprintf("https://%s.blob.core.windows.net", accountName)
+    accountSAS := os.Getenv("AZURE_SA_SAS")
+    accountURL := fmt.Sprintf("https://%s.blob.core.windows.net/?%s", accountName, accountSAS)
     wd, err := os.Getwd()
     if err != nil {
 	log.Fatal(err)
     }
     pathToFiles := wd + "/data"
 
-    // Authentication
-    cred, err := azblob.NewSharedKeyCredential(accountName, accountKey)
-    if err != nil {
-	log.Fatal(err)
-    }
 
     // AzBlob Client
-    blobClient, err := azblob.NewClientWithSharedKeyCredential(accountURL, cred, nil)
+    blobClient, err := azblob.NewClientWithNoCredential(accountURL, nil)
     if err != nil {
 	log.Fatal(err)
     }
