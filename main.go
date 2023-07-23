@@ -7,5 +7,6 @@ import (
 func main() {
     //account.UploadBlobs()
     //account.ListBlobs()
-    account.DownloadBlobs()
+    //account.DownloadBlobs()
+    account.DeleteBlobs()
 }
